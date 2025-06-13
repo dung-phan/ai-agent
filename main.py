@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 import sys
 
 def main():
@@ -15,7 +16,10 @@ def main():
         sys.exit(1)
 
     prompt = " ".join(args)
-    res = client.models.generate_content(model="gemini-2.0-flash-001", contents=prompt)
+    messages = [
+        types.Content(role="user", parts=[types.Part(text=prompt)])
+    ]
+    res = client.models.generate_content(model="gemini-2.0-flash-001", contents=messages)
     token_usage = res.usage_metadata
     print('prompt:', res.text)
     print("Prompt tokens:", token_usage.prompt_token_count)
