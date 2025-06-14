@@ -18,18 +18,11 @@ def get_files_info(working_dir, directory=None):
         return f"Error: {e}"
 
 def generate_dir_content(path):
-    try:
-        files = os.listdir(path)
+    files = os.listdir(path)
 
-        def get_file_info(file):
-            file_path = os.path.join(path, file)
-            return f"- {file}: file_size={os.path.getsize(file_path)} bytes, is_dir={os.path.isdir(file_path)}"
+    def get_file_info(file):
+        file_path = os.path.join(path, file)
+        return f"- {file}: file_size={os.path.getsize(file_path)} bytes, is_dir={os.path.isdir(file_path)}"
 
-        return "\n".join(list((map(get_file_info,files))))
-
-    except Exception as e:
-        return f"Error: {e}"
-
-
-
+    return "\n".join(list((map(get_file_info,files))))
 
