@@ -4,7 +4,7 @@ from google import genai
 from google.genai import types
 import sys
 
-from genai_call_function import available_functions
+from genai_call_function import available_functions, call_function
 from genai_prompts import system_prompt
 
 
@@ -46,7 +46,12 @@ def generate_content(client, messages, is_verbose):
 
     if res.function_calls:
         for f in res.function_calls:
-            print(f"Calling function: {f.name}({f.args})")
+            result = call_function(f, is_verbose)
+            if not result.parts[0] or not result.parts[0].function_response:
+                raise Exception("Empty function call result")
+            if is_verbose:
+                print(f"-> {result.parts[0].function_response.response['result']}")
+
     else:
         print("Response:", res.text)
 

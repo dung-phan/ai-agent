@@ -1,11 +1,11 @@
 import os
 from google.genai import types
 
-def get_files_info(working_dir, directory=None):
+def get_files_info(working_directory, directory=None):
     try:
         current_dir = '' if directory is None else directory
-        working_dir_path = os.path.abspath(working_dir)
-        merged_path = os.path.abspath(os.path.join(working_dir, current_dir))
+        working_dir_path = os.path.abspath(working_directory)
+        merged_path = os.path.abspath(os.path.join(working_directory, current_dir))
         is_dir = os.path.isdir(merged_path)
 
         if not (merged_path.startswith(working_dir_path + os.sep) or merged_path == working_dir_path):
